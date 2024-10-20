@@ -77,6 +77,20 @@ body {
   image-rendering: pixelated;
 }
 
+.image-container::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60%;
+  /* Adjust this to control the height of the shadow */
+  background: rgba(255, 0, 0, 0.5);
+  /* Black with some transparency */
+  z-index: 1111;
+  /* Position it above the image but below the text */
+}
+
 .image-container p {
   position: absolute;
   bottom: 0;
@@ -87,9 +101,10 @@ body {
   text-align: center;
   padding: 8px 0;
   font-weight: 700;
-  /* Bold weight for contrast */
   opacity: 0;
   transform: translateY(20px);
+  z-index: 2;
+  /* Ensure text is above shadow */
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
@@ -100,6 +115,7 @@ body {
 
 .image-container:hover {
   cursor: pointer;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
 }
 
 .clear-button {
