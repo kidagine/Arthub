@@ -49,16 +49,19 @@ function App() {
   };
 
   const handleClearImages = () => {
-    db.images.clear().then(() => {
-      setImages([]);
-    });
+    // Prompt the user for confirmation
+    const confirmed = window.confirm("Are you sure you want to clear all images?");
+    if (confirmed) {
+      db.images.clear().then(() => {
+        setImages([]);
+      });
+    }
   };
 
   const handleDragOver = (e) => {
     e.preventDefault();
     setIsDragging(true);
   };
-
 
   const handleClick = () => {
     fileInputRef.current.click();
@@ -81,14 +84,11 @@ function App() {
       const minWidth = 300; // Set your threshold width
       const minHeight = 300; // Set your threshold height
       const isTooSmall = width < minWidth || height < minHeight;
-      setSelectedImage({
-        url: image.url,
-        date: image.date, // Save the date
-        name: image.url.split('/').pop(), // Extract the image name from the URL
-        upscale: isTooSmall
-      });
+      // Pass the date and url to selectedImage state
+      setSelectedImage({ url: image.url, date: image.date, upscale: isTooSmall });
     };
   };
+
   const closeModal = () => {
     setSelectedImage(null);
   };
@@ -125,24 +125,31 @@ function App() {
 
     return { chartData: chartData.reverse(), streak, totalContributions }; // Return total contributions
   };
-
+  const downloadImage = (url, date) => {
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `image-${date}.png`; // Use a unique name for the download
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   const ContributionChart = ({ contributionData }) => {
     return (
       <div className="chart-container">
         {contributionData.map((day, index) => {
           const colorIntensity = Math.min(day.count * 50, 255);
-          const color = day.count === 0 ? '#d9d9d9' : `rgba(255, 20, 147, ${colorIntensity / 255})`;
+          const color = day.count === 0 ? '#292929' : `rgba(255, 20, 147, ${colorIntensity / 255})`;
           return (
             <div
               key={day.date}
               className="contribution-square"
               style={{
                 backgroundColor: color,
-                height: '20px',
-                width: '20px',
+                height: '15px',
+                width: '15px',
                 margin: '1px',
-                border: '1px solid #fff',
+                borderRadius: '3px',
                 display: 'inline-block',
               }}
             />
@@ -158,7 +165,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Image Uploader</h1>
+        <h1>ArtHub</h1>
         <div
           className={`drop-area ${isDragging ? 'drag-over' : ''}`}
           onDragOver={handleDragOver}
@@ -166,7 +173,7 @@ function App() {
           onDragLeave={() => setIsDragging(false)}
           onClick={handleClick}
         >
-          <p>Drag and drop your PNG images here, or click to select files.</p>
+          <p>Upload Art</p>
           <input
             type="file"
             accept="image/png"
@@ -176,14 +183,12 @@ function App() {
           />
         </div>
         <button className="clear-button" onClick={handleClearImages}>Clear Images</button>
-        {/* Display contribution streak */}
-        <p>Your contribution streak: <strong>{streak}</strong> days</p>
       </header>
       <section className="gallery-section">
-        <h2>Uploaded Images:</h2>
+        <h2>Art Gallery</h2>
         <div className="image-gallery">
           {images.map(image => (
-            <div key={image.id} className="image-container" onClick={() => openModal(image.url)}>
+            <div key={image.id} className="image-container" onClick={() => openModal(image)}>
               <img src={image.url} alt={`Uploaded at ${image.date}`} />
               <p>{image.date}</p>
             </div>
@@ -191,9 +196,8 @@ function App() {
         </div>
       </section>
       <section className="chart-section">
-        <h2>Contributions Chart:</h2>
+        <h2>{totalContributions} Total Contributions - Streak {streak}</h2>
         <ContributionChart contributionData={chartData} />
-        <p>Total Contributions: <strong>{totalContributions}</strong></p> {/* Display total contributions here */}
       </section>
 
       {/* Modal for displaying the selected image */}
@@ -205,6 +209,19 @@ function App() {
             className={`modal-image ${selectedImage.upscale ? 'upscaled' : ''}`}
           />
         </div>
+      )}
+
+      {/* Fixed download button */}
+      {selectedImage && (
+        <button
+          className="download-button fixed-download-button"
+          onClick={(e) => {
+            e.stopPropagation(); // Prevent modal close
+            downloadImage(selectedImage.url, selectedImage.date);
+          }}
+        >
+          Download Image
+        </button>
       )}
     </div>
   );
