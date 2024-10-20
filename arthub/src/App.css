@@ -1,0 +1,114 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 20px;
+}
+
+.App {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+  background: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.App-header {
+  text-align: center;
+}
+
+.drop-area {
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  cursor: pointer;
+  transition: border-color 0.3s;
+}
+
+.drop-area.drag-over {
+  border-color: #ff69b4;
+  /* Hot pink for drag over */
+}
+
+.image-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.image-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: transform 0.1s;
+}
+
+.image-container:hover {
+  transform: scale(1.05);
+}
+
+.image-container img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+  image-rendering: pixelated;
+}
+
+.image-container p {
+  text-align: center;
+  margin: 8px 0;
+  color: #555;
+}
+
+.clear-button {
+  background-color: #ff3838;
+  /* A red color for the button */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.clear-button:hover {
+  background-color: #ff5757;
+  /* Darker red on hover */
+}
+
+.chart-container {
+  margin-top: 20px;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-image {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+.modal-image.upscaled {
+  transform: scale(4);
+  /* Scale factor to upscale the image */
+  width: auto;
+  /* Ensure other styles don't conflict */
+  height: auto;
+  /* Ensure other styles don't conflict */
+}
