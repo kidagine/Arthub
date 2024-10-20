@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/Arthub/static/css/main.618eeaf4.css",
+    "main.js": "/Arthub/static/js/main.e74a84ce.js",
+    "static/js/453.bafeee75.chunk.js": "/Arthub/static/js/453.bafeee75.chunk.js",
+    "index.html": "/Arthub/index.html",
+    "main.618eeaf4.css.map": "/Arthub/static/css/main.618eeaf4.css.map",
+    "main.e74a84ce.js.map": "/Arthub/static/js/main.e74a84ce.js.map",
+    "453.bafeee75.chunk.js.map": "/Arthub/static/js/453.bafeee75.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.618eeaf4.css",
+    "static/js/main.e74a84ce.js"
+  ]
+}
