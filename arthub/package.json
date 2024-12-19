@@ -1,7 +1,7 @@
 {
   "name": "arthub",
   "version": "0.1.0",
-  "homepage": "https://ampersand-associates.github.io/Arthub",
+  "homepage": "https://kidagine.github.io/Arthub",
   "private": true,
   "dependencies": {
     "@octokit/rest": "^21.0.2",
